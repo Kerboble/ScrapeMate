@@ -3,6 +3,7 @@ import logo from "../assets/scraper(3).png"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom"
 
 function Login() {
     
@@ -15,7 +16,7 @@ function Login() {
         try {
             await signInWithEmailAndPassword(auth, email, password);
             console.log("logged in")
-            navigate("/home")
+            navigate("/")
         } catch (error) {
             console.log(error)
         }
@@ -29,12 +30,13 @@ function Login() {
             </div>
             <div className="form-container">
                 <h1>ScrapeMate</h1>
-                <h3>Login</h3>
+                <h4>Login</h4>
                 <form onSubmit={handleSubmit}>
                     <input type="email" placeholder='Email'/>
                     <input type="password" placeholder='password'/>
-                    <button>Log in</button>
+                    <button className='glow-on-hover'>Login</button>
                 </form>
+                <span>Don't have an account? <Link className="link" to="/register">Register</Link></span>
             </div>
         </div>
     </div>
