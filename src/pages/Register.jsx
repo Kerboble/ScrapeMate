@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from "../assets/scraper(3).png"
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile  } from "firebase/auth";
 import { auth, storage, db } from '../../firebase';
 import { ref } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
@@ -31,6 +31,10 @@ function Register() {
                 email
             }); 
 
+            await updateProfile(res.user,{
+                displayName
+            });
+
             navigate("/")
     
         } catch (error) {
@@ -53,7 +57,7 @@ function Register() {
                 <input type="email" placeholder='Email'/>
                 <input type="password" placeholder='password'/>
                 <input type="password" placeholder='confirm password' />
-                <button class="glow-on-hover">Register</button>
+                <button className="glow-on-hover">Register</button>
             </form>
             <span>Already have an account? <Link className='link' to="/login">Log in</Link></span>
         </div>
