@@ -83,7 +83,7 @@ app.get('/scrape', async (req, res) => {
             offers,
         };
 
-        
+        console.log(result)
         return res.json(result);
     } catch (error) {
         console.error('Error fetching data:', error.message);

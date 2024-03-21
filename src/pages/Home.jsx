@@ -9,12 +9,13 @@ function Home() {
     const {currentUser} = useContext(AuthContext);
     const [time, setTime] = useState(null)
     const [data, setData] = useState([])
-    const handleChange = (event) => {
-      console.log(event.target.value)
-      setTime(event.target.value)
-    };
-    const scrapeUrl = 'http://localhost:3000/scrape'; 
-    
+
+    // const handleChange = (event) => {
+    //   setTime(event.target.value)
+    // };
+
+    const scrapeUrl = 'http://localhost:3000/scrape';
+
     const handleSubmit = async (event) => {
       event.preventDefault();
       const url = event.target[0].value;
@@ -31,7 +32,7 @@ function Home() {
       .catch(error => {
         console.error("Error", error.message);
       });
-    }    
+    }
 
 
   return (
@@ -40,12 +41,10 @@ function Home() {
         <form onSubmit={handleSubmit}>
           <input type="text" className='url-input' placeholder='Amazon item url'/>
           <input type="text" placeholder='category' />
-          <input onChange={handleChange} type="range" className="time-range" id="" />
-          <label htmlFor="time-range">minutes: {time}</label>
           <button className='glow-on-hover' >Submit</button>
         </form>
         <button className="glow-on-hover sign-out" onClick={()=>signOut(auth)}>Sign out</button>
-        <Tabs 
+        <Tabs
         data={data}
         />
     </div>
