@@ -32,9 +32,9 @@ function Timer({ time }) {
   }, [time]); // Run effect whenever time changes
 
   return (
-    <div>
-      <h1>Countdown Timer</h1>
-      <div>
+    <div className='timer'>
+      <h3>Next Scrape</h3>
+      <div className='countdown'>
         {hours < 10 ? '0' + hours : hours}:{minutes < 10 ? '0' + minutes : minutes}:{seconds < 10 ? '0' + seconds : seconds}
       </div>
     </div>

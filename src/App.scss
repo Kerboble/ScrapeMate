@@ -341,6 +341,20 @@ input {
         flex-direction: column;
         width: 20vw;
         justify-content: center;
+
+        .timer {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 5px;
+
+            .countdown{
+                color: tomato;
+            }
+
+        }
         
         
 
@@ -348,6 +362,7 @@ input {
             text-align: center;
             margin-bottom: 0.4vh;
         }
+
         
     }
 
