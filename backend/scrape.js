@@ -2,6 +2,7 @@ import axios from 'axios';
 import { JSDOM } from 'jsdom';
 import cors from 'cors';
 import express from 'express';
+import tough from 'tough-cookie';
 
 const app = express();
 
@@ -11,6 +12,27 @@ app.use(cors({
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type", "Authorization"] 
 }));
+
+// Create a new cookie jar instance
+const cookieJar = new tough.CookieJar();
+
+// Your code...
+
+// Use axios interceptors to manage cookies
+axios.interceptors.request.use(config => {
+    const cookieHeader = cookieJar.getCookieStringSync(config.url);
+    config.headers.Cookie = cookieHeader;
+    return config;
+});
+
+axios.interceptors.response.use(response => {
+    if (response.headers['set-cookie']) {
+        response.headers['set-cookie'].forEach(cookie => {
+            cookieJar.setCookieSync(cookie, response.config.url);
+        });
+    }
+    return response;
+});
 
 const userAgents = [
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36',
