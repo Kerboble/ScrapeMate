@@ -14,22 +14,33 @@ app.use(cors({
 
 const userAgents = [
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.2 Safari/605.1.15',
+    'Mozilla/5.0 (X11; Linux x86_64; rv:97.0) Gecko/20100101 Firefox/97.0',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 11_6_2) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.3 Safari/605.1.15'
 ];
 
-const getRandomUserAgent = () => userAgents[Math.floor(Math.random() * userAgents.length)];
+function getRandomUserAgent() {
+    const userAgent = userAgents[Math.floor(Math.random() * userAgents.length)];
+    console.log(userAgent);
+    return userAgent;
+};
 
 async function extractASINFromAmazonURL(url) {
     const asinRegex = /\/dp\/(B[0-9A-Z]{9})/;
     const match = url.match(asinRegex);
     return match ? match[1] : null;
-}
+};
 
 const getProductUrl = (productID) => {
     return `https://www.amazon.com/gp/product/ajax/?asin=${productID}&m=&smid=&sourcecustomerorglistid=&sourcecustomerorglistitemid=&sr=8-3&pc=dp&experienceId=aodAjaxMain`;
 };
 
 app.get('/scrape', async (req, res) => {
-    const { url } = req.query;
+    const { url, desiredPrice, timeInterval } = req.query; // Extract desiredPrice from query parameters
 
     try {
         const productID = await extractASINFromAmazonURL(url);
@@ -44,6 +55,7 @@ app.get('/scrape', async (req, res) => {
                 Host: 'www.amazon.com'
             },
         });
+       
 
         const dom = new JSDOM(html);
         const scrape = (selector) => dom.window.document.querySelector(selector);
@@ -81,6 +93,9 @@ app.get('/scrape', async (req, res) => {
             photo: product_photo?.src.trim(),
             pinned: getOffer(pinnedElement),
             offers,
+            desiredPrice,
+            timeInterval
+            
         };
 
         console.log(result)
@@ -90,6 +105,7 @@ app.get('/scrape', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
