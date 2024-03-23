@@ -195,11 +195,16 @@ input {
     overflow: scroll;
     position: relative;
 
+    .home-wrapper{
+        height: 30vh;
+    }
+
     form{
         display: flex;
         flex-direction: column;
         align-items: center;
         margin-bottom: 50px;
+        position: relative;
     }
 
     h1{
@@ -239,24 +244,20 @@ input {
         gap: 5px;
     }
 
-    .loader {
-        display: flex;
-        flex-direction: row;
-    }
+    
     .loader-icon{
-        height: 50px;
-        width: 50px;
+        position: absolute;
+        height: 25px;
+        width: 25px;
         animation:
         bounce2 500ms
         alternate infinite
         cubic-bezier(.5, .5, .5, 0.5);
+        bottom: -45px;
+        right: 49%;
     }
 
-    .loader-container{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+   
     input[type=number] { 
         -moz-appearance: textfield;
         appearance: textfield;
@@ -332,7 +333,7 @@ input {
             height: 10vh;
             
             object-fit: cover;
-            border-radius: 20px;
+            border-radius: 2px;
         }
     }
 

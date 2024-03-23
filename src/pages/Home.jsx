@@ -104,6 +104,8 @@ function Home() {
             setLoading(false);
             alert('duplicated product')
           };
+
+          document.getElementById('myForm').reset();
         };
 
     const fetchData = (url, desiredPrice, timeInterval) => {
@@ -146,28 +148,30 @@ function Home() {
 
   return (
     <div className='home-container'>
-      <header>
-        <h1>Welcome back <span>{currentUser.displayName}</span></h1>
-        <button className="glow-on-hover sign-out" onClick={()=>signOut(auth)}><img src={signout} alt="Image Description" /></button>
-      </header>
-        <form onSubmit={handleSubmit}>
-          <input type="text" className='url-input' placeholder='Amazon item url'/>
-          <input type="number" placeholder='Desired Price' />
-          <input type="number" placeholder='Enter time interval' onChange={handleChange}/> 
-          {!time && <p className='interval-message'>Please enter a valid time interval</p>}
+      <div className="home-wrapper">
+        <header>
+          <h1>Welcome back <span>{currentUser.displayName}</span></h1>
+          <button className="glow-on-hover sign-out" onClick={()=>signOut(auth)}><img src={signout} alt="Image Description" /></button>
+        </header>
+        <form id='myForm' onSubmit={handleSubmit}>
+            <input type="text" className='url-input' placeholder='Amazon item url'/>
+            <input type="number" placeholder='Desired Price' />
+            <input type="number" placeholder='Enter time interval' onChange={handleChange}/> 
+            {!time && <p className='interval-message'>Please enter a valid time interval</p>}
           <div className='range-options'>
-            <button type="button" onClick={() => handleDuration('minutes')} className="glow-on-hover duration">minutes</button> 
-            <button type="button" onClick={() => handleDuration('hours')} className="glow-on-hover duration">hours</button>
-            <button type="button" onClick={() => handleDuration('days')} className="glow-on-hover duration">days</button>
+              <button type="button" onClick={() => handleDuration('minutes')} className="glow-on-hover duration">minutes</button> 
+              <button type="button" onClick={() => handleDuration('hours')} className="glow-on-hover duration">hours</button>
+              <button type="button" onClick={() => handleDuration('days')} className="glow-on-hover duration">days</button>
           </div>
           <div className='loader-container'>
-          <button className='glow-on-hover' >Submit </button> 
-          {loading && <Loader/>}
+            <button className='glow-on-hover' >Submit</button> 
+            {loading && <Loader />}
           </div>
         </form>
         <Tabs
           data={data}
         />
+      </div>
     </div>
   )
 }
