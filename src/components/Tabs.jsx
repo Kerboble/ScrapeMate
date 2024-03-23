@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Timer from './Timer';
 
 function Tabs({ data }) {
   const [products, setProducts] = useState([]);
@@ -37,6 +38,7 @@ function Tabs({ data }) {
             <p>Ships from: {product.pinned.ships_from}</p>
             <p>Sold by: {product.pinned.sold_by}</p>
             <p>Delivery Details: {product.pinned.delivery_details}</p>
+            
           </div>
         )}
         <div class="vertical-line"></div>
