@@ -16,7 +16,6 @@ app.use(cors({
 // Create a new cookie jar instance
 const cookieJar = new tough.CookieJar();
 
-// Your code...
 
 // Use axios interceptors to manage cookies
 axios.interceptors.request.use(config => {
